@@ -1,0 +1,159 @@
+CmpoAcc,FigureCmpoName,CmpoPhenotypeCategory,FigureCategoryName
+CMPO_0000052,decreased cell numbers,altered cell number in population,altered cell number in population
+CMPO_0000416,fewer aggregated cells in population,altered cell number in population,altered cell number in population
+CMPO_0000075,fewer cells with projections,altered cell number in population,altered cell number in population
+CMPO_0000051,increased cell numbers,altered cell number in population,altered cell number in population
+CMPO_0000340,increased cell size in population,altered cell number in population,altered cell number in population
+CMPO_0000263,more cells in M phase,altered cell number in population,altered cell number in population
+CMPO_0000083,more lamellipodia cells,altered cell number in population,altered cell number in population
+CMPO_0000300,more multinucleate cells,altered cell number in population,altered cell number in population
+CMPO_0000241,proliferating cells,altered cell number in population,altered cell number in population
+CMPO_0000067,decreased number of filopodia,cell component number phenotype,cell component number
+CMPO_0000068,decreased number of microtubules,cell component number phenotype,cell component number
+CMPO_0000289,increased amount of stress fibers,cell component number phenotype,cell component number
+CMPO_0000297,increased amount of stress fibers located in the cell cortex,cell component number phenotype,cell component number
+CMPO_0000298,increased amount of transverse stress fibers,cell component number phenotype,cell component number
+CMPO_0000299,increased amount of zig-zag stress fibers,cell component number phenotype,cell component number
+CMPO_0000042,increased cell component number,cell component number phenotype,cell component number
+CMPO_0000076,increased number of filopodia,cell component number phenotype,cell component number
+CMPO_0000372,increased number of microtubule bundle,cell component number phenotype,cell component number
+CMPO_0000097,increased number of microtubules,cell component number phenotype,cell component number
+CMPO_0000437,abnormal cell cycle phase,cell cycle phase phenotype,cell cycle phase
+CMPO_0000329,decreased duration of mitotic prophase,cell cycle phase phenotype,cell cycle phase
+CMPO_0000196,M phase arrested,cell cycle phase phenotype,cell cycle phase
+CMPO_0000265,M phase mitotic,cell cycle phase phenotype,cell cycle phase
+CMPO_0000305,metaphase arrested,cell cycle phase phenotype,cell cycle phase
+CMPO_0000307,metaphase delayed,cell cycle phase phenotype,cell cycle phase
+CMPO_0000343,prometaphase arrested,cell cycle phase phenotype,cell cycle phase
+CMPO_0000087,S phase mitotic,cell cycle phase phenotype,cell cycle phase
+CMPO_0000212,abnormal cell cycle,cell cycle phenotype,cell cycle
+CMPO_0000216,absence of mitotic chromosome decondensation,cell cycle phenotype,cell cycle
+CMPO_0000328,increased duration of mitotic prophase,cell cycle phenotype,cell cycle
+CMPO_0000338,mitosis arrested,cell cycle phenotype,cell cycle
+CMPO_0000202,mitosis delayed,cell cycle phenotype,cell cycle
+CMPO_0000218,mitotic chromosome condensation,cell cycle phenotype,cell cycle
+CMPO_0000348,mitotic metaphase plate congression,cell cycle phenotype,cell cycle
+CMPO_0000344,prometaphase delayed,cell cycle phenotype,cell cycle
+CMPO_0000116,abnormal cell shape,cell morphology phenotype,cell morphology
+CMPO_0000048,apoptotic cell shape,cell morphology phenotype,cell morphology
+CMPO_0000005,cell morphology,cell morphology phenotype,cell morphology
+CMPO_0000071,cell with projections,cell morphology phenotype,cell morphology
+CMPO_0000365,curved cell,cell morphology phenotype,cell morphology
+CMPO_0000129,decreased cell size,cell morphology phenotype,cell morphology
+CMPO_0000077,elongated cell,cell morphology phenotype,cell morphology
+CMPO_0000261,geometric cell,cell morphology phenotype,cell morphology
+CMPO_0000128,increased cell size,cell morphology phenotype,cell morphology
+CMPO_0000366,pear-shaped cell,cell morphology phenotype,cell morphology
+CMPO_0000118,round cell,cell morphology phenotype,cell morphology
+CMPO_0000364,S-shaped cell,cell morphology phenotype,cell morphology
+CMPO_0000267,star shaped cell,cell morphology phenotype,cell morphology
+CMPO_0000367,stubby cell,cell morphology phenotype,cell morphology
+CMPO_0000122,triangular shaped cell,cell morphology phenotype,cell morphology
+CMPO_0000428,fan-shaped cell,cell morphology phenotype,cell morphology
+CMPO_0000410,fewer cells with G1 phase microtubule arrays,cell population phenotype by morphology,cell population by morphology
+CMPO_0000388,fewer cells with interphase microtubule arrays,cell population phenotype by morphology,cell population by morphology
+CMPO_0000387,fewer cells with metaphase microtubule spindles,cell population phenotype by morphology,cell population by morphology
+CMPO_0000270,increased variability of cell shape in population,cell population phenotype by morphology,cell population by morphology
+CMPO_0000269,increased variability of cell size in population,cell population phenotype by morphology,cell population by morphology
+CMPO_0000345,increased variability of nuclear shape in population,cell population phenotype by morphology,cell population by morphology
+CMPO_0000282,layered cells in population,cell population phenotype by morphology,cell population by morphology
+CMPO_0000412,more cells with G1 phase microtubule arrays,cell population phenotype by morphology,cell population by morphology
+CMPO_0000383,more cells with interphase microtubule arrays,cell population phenotype by morphology,cell population by morphology
+CMPO_0000378,more cells with metaphase microtubule spindles,cell population phenotype by morphology,cell population by morphology
+CMPO_0000413,more cells with S phase microtubule arrays,cell population phenotype by morphology,cell population by morphology
+CMPO_0000266,asymmetric lamellipodia,cell projection phenotype,cell projection
+CMPO_0000280,cell projection,cell projection phenotype,cell projection
+CMPO_0000252,cilium morphology,cell projection phenotype,cell projection
+CMPO_0000224,decreased axon thickness,cell projection phenotype,cell projection
+CMPO_0000277,decreased lamellipodia width,cell projection phenotype,cell projection
+CMPO_0000278,fan-shaped lamellipodia,cell projection phenotype,cell projection
+CMPO_0000133,increased cilium length,cell projection phenotype,cell projection
+CMPO_0000303,cell component morphology,cellular component phenotype,cellular component
+CMPO_0000010,cell component size,cellular component phenotype,cellular component
+CMPO_0000012,cell component structure,cellular component phenotype,cellular component
+CMPO_0000259,cellular component,cellular component phenotype,cellular component
+CMPO_0000276,increased lamellipodia width,cellular component phenotype,cellular component
+CMPO_0000438,abnormal microtubule cytoskeleton morphology during mitotic interphase,cytoskeletal phenotype,cytoskeletal
+CMPO_0000283,actin cytoskeleton,cytoskeletal phenotype,cytoskeletal
+CMPO_0000104,actin filament,cytoskeletal phenotype,cytoskeletal
+CMPO_0000302,actin nuclear ring,cytoskeletal phenotype,cytoskeletal
+CMPO_0000286,aggregated microtubules,cytoskeletal phenotype,cytoskeletal
+CMPO_0000273,decreased cortical actin cytoskeleton mass,cytoskeletal phenotype,cytoskeletal
+CMPO_0000106,decreased number of actin filament,cytoskeletal phenotype,cytoskeletal
+CMPO_0000274,disorganised cortical actin cytoskeleton,cytoskeletal phenotype,cytoskeletal
+CMPO_0000147,disorganized microtubules,cytoskeletal phenotype,cytoskeletal
+CMPO_0000370,elongated cytoplasmic microtubules,cytoskeletal phenotype,cytoskeletal
+CMPO_0000296,increased actin localised to the cytoplasm,cytoskeletal phenotype,cytoskeletal
+CMPO_0000294,increased actin localised to the nucleus,cytoskeletal phenotype,cytoskeletal
+CMPO_0000291,increased amount of punctate actin foci,cytoskeletal phenotype,cytoskeletal
+CMPO_0000272,increased cortical actin cytoskeleton mass,cytoskeletal phenotype,cytoskeletal
+CMPO_0000105,increased number of actin filament,cytoskeletal phenotype,cytoskeletal
+CMPO_0000376,microtubule spindle morphology,cytoskeletal phenotype,cytoskeletal
+CMPO_0000287,microtubules nuclear bracket,cytoskeletal phenotype,cytoskeletal
+CMPO_0000288,microtubules nuclear ring,cytoskeletal phenotype,cytoskeletal
+CMPO_0000371,shortened cytoplasmic microtubules,cytoskeletal phenotype,cytoskeletal
+CMPO_0000157,abnormal nucleus shape,nuclear phenotype,nuclear
+CMPO_0000112,apoptopic nucleus,nuclear phenotype,nuclear
+CMPO_0000117,bilobed nucleus,nuclear phenotype,nuclear
+CMPO_0000335,bright nuclear body,nuclear phenotype,nuclear
+CMPO_0000154,bright nuclei,nuclear phenotype,nuclear
+CMPO_0000141,decreased nucleus size,nuclear phenotype,nuclear
+CMPO_0000156,graped micronucleus,nuclear phenotype,nuclear
+CMPO_0000140,increased nucleus size,nuclear phenotype,nuclear
+CMPO_0000249,nuclear morphology,nuclear phenotype,nuclear
+CMPO_0000357,polylobed nuclear,nuclear phenotype,nuclear
+CMPO_0000341,pyknotic nuclear,nuclear phenotype,nuclear
+CMPO_0000123,round nucleus,nuclear phenotype,nuclear
+CMPO_0000433,increased level of polypetide in cell nucleus,nuclear phenotype,nuclear
+CMPO_0000434,decreased level of polypetide in cell nucleus,nuclear phenotype,nuclear
+CMPO_0000439,absence of protein localized in bud neck,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000391,protein localized in bud neck,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000404,protein localized in Cajal body,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000392,protein localized in cell periphery,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000425,protein localized in centrosome,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000393,protein localized in cytosol,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000394,protein localized in endoplasmic reticulum,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000395,protein localized in mitochondrion,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000396,protein localized in nuclear periphery,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000426,protein localized in nuclear pore,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000405,protein localized in nuclear speckle,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000397,protein localized in nucleolus,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000398,protein localized in nucleus,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000406,protein localized in paraspeckle,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000407,protein localized in PML body,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000408,protein localized in polycomb body,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000400,protein localized in punctate foci,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000409,protein localized in Sam68 nuclear body,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000402,protein localized in vacuolar membrane,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000401,protein localized in vacuole,protein localization to cellular component phenotype,protein localization to cellular component
+CMPO_0000217,absence of mitotic process,absence of cell process phenotype,other
+CMPO_0000324,absence of cell spreading,cell adhesion phenotype,other
+CMPO_0000028,cell adhesion,cell adhesion phenotype,other
+CMPO_0000188,cell spreading,cell adhesion phenotype,other
+CMPO_0000185,cell-matrix adhesion,cell adhesion phenotype,other
+CMPO_0000145,increased thickness of dendritic branches,cell component morphology phenotype,other
+CMPO_0000220,cell apoptosis,cell death phenotype,other
+CMPO_0000030,cell death,cell death phenotype,other
+CMPO_0000262,apoptotic DNA,cell DNA phenotype,other
+CMPO_0000176,cell DNA,cell DNA phenotype,other
+CMPO_0000177,misshapen DNA,cell DNA phenotype,other
+CMPO_0000316,abnormal cell growth,cell growth phenotype,other
+CMPO_0000237,increased cell movement distance,cell movement phenotype,other
+CMPO_0000236,increased cell movement speed,cell movement phenotype,other
+CMPO_0000213,binuclear cell,cell nucleation phenotype,other
+CMPO_0000086,polyploid cell,cell ploidy phenotype,other
+CMPO_0000293,loss of cell monolayer,cell population layer phenotype,other
+CMPO_0000049,aggregated cells in population,cell population phenotype,other
+CMPO_0000301,no cells,cell population phenotype,other
+CMPO_0000415,cell response to DNA damage,cell response to stress phenotype,other
+CMPO_0000326,abnormal chromosome segregation,chromosome segregation phenotype,other
+CMPO_0000351,increased microtubule-based processes,increased microtubule-based processes phenotype,other
+CMPO_0000037,metabolic process,metabolic process phenotype,other
+CMPO_0000427,kinetochore,organelle phenotype,other
+CMPO_0000039,regulation of metabolic process,regulation of process phenotype,other
+CMPO_0000436,positive regulation of protein import into nucleus,regulation of process phenotype,other
+CMPO_0000435,negative regulation of protein import into nucleus,regulation of process phenotype,other
+CMPO_0000421,cellular response to chemical stimulus,response to stimulus phenotype,other
+CMPO_0000246,increased rate of protein secretion,transport phenotype,other
+CMPO_0000318,mild decrease in rate of protein secretion,transport phenotype,other
+CMPO_0000319,strong decrease in rate of protein secretion,transport phenotype,other
