@@ -6,7 +6,7 @@ Helper functions for accessing the IDR demo from within IPython notebooks.
 def annotation_ids_by_field(conn,
                             value="CMPO_0000077",
                             key="Phenotype Term Accession",
-                            ns="openmicroscopy.org/omero/bulk_annotations"):
+                            ns="openmicroscopy.org/mapr/phenotype"):
     """
     Return a list of IDs for map annotations with the given namespace
     that have a key=value pair matching the given parameters.
