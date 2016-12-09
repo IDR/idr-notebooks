@@ -7,8 +7,9 @@ Full access to IDR metadata and images is provided through the standard OMERO AP
 ## Available notebooks:
 
 - **Getting_Started.ipynb**s: How to connect, some simple data access
-- **fig1b.ipynb**: Reproduces fig. 1b of the paper: Download annotations from all screens and compute and plot some statistics on phenotypes. Interative visualisation is done uing [bokeh](bokeh.pydata.org/)
-- **GeneNetwork.ipynb**: Reproduces fig. 2 of the paper: download annotations from 3 screens with a phenotype in common, query StrinDB for interactions and plot the resulting network. Uses a conversion table for orthologues and gene identifier which was built off line using biomart (see article for more details.). It uses py2cytoscape to display networks.
-- **RohnPhenotypeClustering.ipynb**: Downloads annotations from IDR008, and perform some simple phenotypic clusering, building a figure similar to Fig. 1 of the corresponding paper. Build a galery of thumbnails from images of several phenotypes.
-- **CondensationPCAanalysis.ipynb**: Shows how to access the computed CHARM features using OMERO.table and perform some analysis on them, showing that single cell informtion can be accessed from generic tile-based features without segmentation.
+- **Figure_1_Sampling_of_Phenotypes.ipynb**: Reproduces fig. 1b of the paper: Download annotations from all screens and compute and plot some statistics on phenotypes. Interative visualisation is done using [bokeh](bokeh.pydata.org/)
+- **GeneNetwork.ipynb**: Reproduces fig. 2 of the paper: download annotations from 3 screens with a phenotype in common, query StrinDB for interactions and plot the resulting network. Uses a conversion table for orthologues and gene identifiers which was built off line using biomart (see article for more details.). It uses [bokeh](bokeh.pydata.org/) and py2cytoscape to display networks.
+- **RohnPhenotypeClustering.ipynb**: Downloads annotations from IDR008, and perform some simple phenotypic clustering, building a figure similar to Fig. 1 of the corresponding paper. Builds a galery of thumbnails from images of several phenotypes.
+- **PCAanalysisOfCharmFeatures.ipynb**: Shows how to access the computed CHARM features using OMERO.table and perform some analysis on them, showing that single cell information can be accessed from generic tile-based features without segmentation.
+- **IDR_API_example_script.ipynb**: Shows example of using the web API to extract metadata.
 
