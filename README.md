@@ -1,6 +1,6 @@
 # idr-notebooks
 
-A set of Python Notebooks to demonstrate how to access the images and metadata from the Image Data Repository (IDR, http://imagedata.science), including features and all descriptive tags. 
+A set of Python Notebooks to demonstrate how to access the images and metadata from the Image Data Repository (IDR, https://idr.openmicroscopy.org), including features and all descriptive tags.
 
 Full access to IDR metadata and images is provided through the standard OMERO API, whose full documentation can be found [here](https://www.openmicroscopy.org/site/support/omero5.2/developers/), with the python bindings found specifically [here](https://www.openmicroscopy.org/site/support/omero5.2/developers/Python.html). The notebooks in this repository are meant to examplify the use of that API in the context of the IDR, and of the sort of query that can be done. In particular, they show how to reproduce Figure 1b and Figure 2 of the paper. They also make use of the [scipy](https://www.scipy.org/) ecosystem, including [pandas](pandas.pydata.org)
 
