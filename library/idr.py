@@ -1,5 +1,5 @@
 """
-Helper functions for accessing the IDR demo from within IPython notebooks.
+Helper functions for accessing the IDR from within IPython notebooks.
 """
 
 
@@ -61,7 +61,7 @@ def simple_colocalisation(image):
 
 def connection():
     """
-    Connect to the IDR demo analysis OMERO server
+    Connect to the IDR analysis OMERO server
     :return: A BlitzGateway object
     """
 
