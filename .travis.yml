@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+    - 2.2
+before_script:
+    - gem install awesome_bot redcarpet
+script:
+    - redcarpet README.md > test.html
+    - awesome_bot --allow-redirect test.html
