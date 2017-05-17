@@ -6,11 +6,18 @@ Full access to IDR metadata and images is provided through the standard OMERO AP
 
 ## Getting started: ##
 
-OAuth logins to Jupyter are controlled by membership in the "[idr-contrib](https://github.com/idr-contrib)" GitHub organization.
-Contact idr at openmicroscopy.org to be added.
-Once you've accepted the invitation, you will need to set your membership to "public".
+- OAuth logins to Jupyter are controlled by membership in the "[idr-contrib](https://github.com/idr-contrib)" GitHub organization.
+  Contact idr at openmicroscopy.org to be added.
+  Once you've accepted the invitation, you will need to set your membership to "public".
 
 ![oauth login](/includes/login_1.png?raw=true "OAuth login")
+
+- Example notebooks can be found under `notebooks/`, but these are read-only.
+  Feel free to copy notebooks into the `scratch/` directory or a subdirectory and edit as necessary.
+- ** All changes should be considered temporary.**
+  Download a copy of notebooks and results when your session is complete.
+- Server restarts which will likely lose data will be announced on
+  https://twitter.com/IDRstatus
 
 ## Basic notebooks:
 
