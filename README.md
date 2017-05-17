@@ -15,7 +15,9 @@ Full access to IDR metadata and images is provided through the standard OMERO AP
 
 ## Getting started: ##
 
-Access to Jupyter is controlled by membership in the "idr-contrib" GitHub organization. Contact idr at openmicroscopy.org to be added. Once you've accepted the invitation, you will need to set your membership to "public".
+Access to Jupyter is controlled by membership in the "[idr-contrib](https://github.com/idr-contrib)" GitHub organization.
+Contact idr at openmicroscopy.org to be added.
+Once you've accepted the invitation, you will need to set your membership to "public".
 
 ----
 
