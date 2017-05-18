@@ -19,37 +19,16 @@ Full access to IDR metadata and images is provided through the standard OMERO AP
 - Server restarts which will likely lose data will be announced on
   https://twitter.com/IDRstatus
 
-## Basic notebooks:
-
-- **[Getting Started](notebooks/Getting_Started.ipynb)**: How to connect, some simple data access
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/Getting_Started.ipynb))
-- **[IDR API example script](notebooks/IDR_API_example_script.ipynb)**:
-   Shows an example of using the web API to extract metadata from the IDR
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/IDR_API_example_script.ipynb))
-
-## Paper-related notebooks:
-
-- **[Figure 1 Sample of Phenotypes](notebooks/Figure_1_Sampling_of_Phenotypes.ipynb)**:
-  Reproduces Fig. 1 of the paper: downloads annotations from all screens and computes and plots some statistics
-  on phenotypes. Interactive visualization is done using [bokeh](bokeh.pydata.org/)
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/Figure_1_Sampling_of_Phenotypes.ipynb))
-- **[Gene Network](notebooks/GeneNetwork.ipynb)**: Reproduces Fig. 2 of the paper: downloads annotations from 3 screens
-  with a phenotype in common, queries StringDB for interactions and plots the resulting network.
-  Uses a conversion table for orthologues and gene identifiers which was built offline using biomart
-  (see article for more details.). It uses [bokeh](bokeh.pydata.org/) and py2cytoscape to display networks.
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/GeneNetwork.ipynb))
-
-## Study-related notebooks:
-
-- **[Rohn Phenotype Clustering](notebooks/RohnPhenotypeClustering.ipynb)**:
-  Downloads annotations from IDR008, and performs some simple phenotypic clustering, building a figure
-  similar to Fig. 1 of the corresponding paper. Builds a gallery of thumbnails from images of several phenotypes.
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/RohnPhenotypeClustering.ipynb))
-- **[PCA analysis of Charm features](notebooks/PCAanalysisOfCharmFeatures.ipynb)**:
-  Shows how to access the computed CHARM features using OMERO.tables
-  and performs some analysis on them, showing that single cell information can be accessed from generic tile-based features
-  without segmentation.
-   ([launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/PCAanalysisOfCharmFeatures.ipynb))
+| **Notebook**                                                                         | **Lang** | **Level**     | **Description**                                                                                                                                                                                                                                                                                                                                                                  | **Launch**                                                                                                        |
+|--------------------------------------------------------------------------------------|----------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **[Getting Started](notebooks/Getting_Started.ipynb)**                               | Py       | Intro         | How to connect, some simple data access                                                                                                                                                                                                                                                                                                                                          | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/Getting_Started.ipynb)                 |
+| **[IDR API example script](notebooks/IDR_API_example_script.ipynb)**                 | Py       | Intro         | Shows an example of using the web API to extract metadata from the IDR                                                                                                                                                                                                                                                                                                           | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/IDR_API_example_script.ipynb)          |
+| **[Figure 1 Sample of Phenotypes](notebooks/Figure_1_Sampling_of_Phenotypes.ipynb)** | Py       | Paper         | Reproduces Fig. 1 of the paper: downloads annotations from all screens and computes and plots some statistics                                                                                                                                                                                                                                                                    | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/Figure_1_Sampling_of_Phenotypes.ipynb) |
+| **[Gene Network](notebooks/GeneNetwork.ipynb)**                                      | Py       | Paper         | Reproduces Fig. 2 of the paper: downloads annotations from 3 screens,with a phenotype in common, queries StringDB for interactions and plots the resulting network.,Uses a conversion table for orthologues and gene identifiers which was built offline using biomart,(see article for more details.). It uses [bokeh](bokeh.pydata.org/) and py2cytoscape to display networks. | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/GeneNetwork.ipynb)                     |
+| **[Rohn Phenotype Clustering](notebooks/RohnPhenotypeClustering.ipynb)**             | Py       | Study details | Downloads annotations from IDR008, and performs some simple phenotypic clustering, building a figure,similar to Fig. 1 of the corresponding paper. Builds a gallery of thumbnails from images of several phenotypes.                                                                                                                                                             | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/RohnPhenotypeClustering.ipynb)         |
+| **[PCA analysis of Charm features](notebooks/PCAanalysisOfCharmFeatures.ipynb)**     | Py       | Study details | Shows how to access the computed CHARM features using OMERO.tables,and performs some analysis on them, showing that single cell information can be accessed from generic tile-based features,without segmentation.                                                                                                                                                               | [launch](https://idr.openmicroscopy.org/jupyter/user/x/notebooks/notebooks/PCAanalysisOfCharmFeatures.ipynb)      |
+|                                                                                      |          |               |                                                                                                                                                                                                                                                                                                                                                                                  |                                                                                                                   |
+|                                                                                      |          |               |                                                                                                                                                                                                                                                                                                                                                                                  |                                                                                                                   |
 
 ----
 
