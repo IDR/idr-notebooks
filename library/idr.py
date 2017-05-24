@@ -133,7 +133,7 @@ def simple_colocalisation(image):
     plt.show()
 
 
-def connection():
+def connection(host=None, user=None, password=None, port=4064):
     """
     Connect to the IDR analysis OMERO server
     :return: A BlitzGateway object
@@ -147,11 +147,18 @@ def connection():
     PASSWORD = "omero"
 # END ANSIBLE MANAGED BLOCK
 
+    if host is None:
+        host = HOSTNAME
+    if user is None:
+        user = USERNAME
+    if password is NONE:
+        password = PASSWORD
+
     import omero
     from omero.gateway import BlitzGateway
-    c = omero.client(HOSTNAME)
+    c = omero.client(host)
     c.enableKeepAlive(300)
-    c.createSession(USERNAME, PASSWORD)
+    c.createSession(user, password)
     conn = BlitzGateway(client_obj=c)
 
     # You are now logged in. In order to guarantee
@@ -164,7 +171,7 @@ def connection():
         print "Closing IDR connection..."
         c.__del__()
         shell.showtraceback((etype, evalue, tb), tb_offset=tb_offset)
-    print "Registering handler..."
+    print "Connected to IDR..."
     get_ipython().set_custom_exc((Exception,), custom_exc)
     
     return conn
