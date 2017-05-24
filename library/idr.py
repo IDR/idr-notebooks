@@ -171,7 +171,7 @@ def connection(host=None, user=None, password=None, port=4064):
         print "Closing IDR connection..."
         c.__del__()
         shell.showtraceback((etype, evalue, tb), tb_offset=tb_offset)
-    print "Registering handler..."
+    print "Connected to IDR..."
     get_ipython().set_custom_exc((Exception,), custom_exc)
     
     return conn
