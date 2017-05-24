@@ -151,7 +151,7 @@ def connection(host=None, user=None, password=None, port=4064):
         host = HOSTNAME
     if user is None:
         user = USERNAME
-    if password is NONE:
+    if password is None:
         password = PASSWORD
 
     import omero
