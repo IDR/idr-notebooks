@@ -1,7 +1,8 @@
 """
 Helper functions for accessing the IDR from within IPython notebooks.
 """
-
+import requests
+    
 def connection(host=None, user=None, password=None, port=4064):
     """
     Connect to the IDR analysis OMERO server
@@ -42,5 +43,23 @@ def connection(host=None, user=None, password=None, port=4064):
         shell.showtraceback((etype, evalue, tb), tb_offset=tb_offset)
     print "Connected to IDR..."
     get_ipython().set_custom_exc((Exception,), custom_exc)
-
+    
     return conn
+
+def createHTTPsession():
+    
+    """
+    Create and return http session
+    """
+    IDR_BASE_URL = "http://idr.openmicroscopy.org"
+    INDEX_PAGE = "%s/webclient/?experimenter=-1" % IDR_BASE_URL
+    
+    # create http session
+    with requests.Session() as session:
+        request = requests.Request('GET', INDEX_PAGE)
+        prepped = session.prepare_request(request)
+        response = session.send(prepped)
+        if response.status_code != 200:
+            response.raise_for_status()
+            
+    return session
