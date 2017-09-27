@@ -133,14 +133,46 @@ def simple_colocalisation(image):
     plt.show()
 
 
+def configuration_from_url(config_url):
+    """
+    OMERO binary protocol doesn't support load balancing nor session pinning
+    so it has to be done client-side by connecting to a random server/port
+    """
+    import random
+    import requests
+
+    r = requests.get(config_url)
+    r.raise_for_status()
+    cfg = r.json()
+    host = cfg.get('host')
+    ports = cfg.get('ports')
+    port = cfg.get('port', 4064)
+    if ports:
+        port = random.choice(ports)
+    return host, port
+
+
 def connection(host=None, user=None, password=None, port=4064):
     """
     Connect to the IDR analysis OMERO server
     :return: A BlitzGateway object
     """
+    import os
+    import sys
+
+    config_url = os.getenv('IDR_OMERO_CONFIGURATION_URL')
+    autocfg_host = 'localhost'
+    autocfg_port = 4064
+    if config_url:
+        try:
+            autocfg_host, autocfg_port = configuration_from_url(config_url)
+        except Exception as e:
+            print >> sys.stderr, 'Failed to fetch configuration:', e
 
     if host is None:
-        host = os.getenv('IDR_HOSTNAME', 'localhost')
+        host = os.getenv('IDR_HOSTNAME', autocfg_host)
+    if port is None:
+        port = os.getenv('IDR_PORT', autocfg_port)
     if user is None:
         user = os.getenv('IDR_USER', 'omero')
     if password is None:
