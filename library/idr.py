@@ -152,7 +152,7 @@ def configuration_from_url(config_url):
     return host, port
 
 
-def connection(host=None, user=None, password=None, port=4064):
+def connection(host=None, user=None, password=None, port=None):
     """
     Connect to the IDR analysis OMERO server
     :return: A BlitzGateway object
@@ -180,7 +180,7 @@ def connection(host=None, user=None, password=None, port=4064):
 
     import omero
     from omero.gateway import BlitzGateway
-    c = omero.client(host)
+    c = omero.client(host, port)
     c.enableKeepAlive(300)
     c.createSession(user, password)
     conn = BlitzGateway(client_obj=c)
