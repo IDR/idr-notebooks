@@ -143,40 +143,51 @@ def configuration_from_url(config_url):
 
     r = requests.get(config_url)
     r.raise_for_status()
-    cfg = r.json()
-    host = cfg.get('host')
-    ports = cfg.get('ports')
-    port = cfg.get('port', 4064)
-    if ports:
-        port = random.choice(ports)
-    return host, port
+    cfgs = r.json()
+    cfg = random.choice(cfgs)
+    return cfg
+
+
+def _lookup_parameter(initial, paramname, autocfg, default):
+    import os
+    if initial is not None:
+        return initial
+    v = autocfg.get(paramname)
+    if v is not None:
+        return v
+    v = os.getenv('IDR_' + paramname.upper())
+    if v is not None:
+        return v
+    return default
 
 
 def connection(host=None, user=None, password=None, port=None):
     """
     Connect to the IDR analysis OMERO server
+    Lookup of connection parameters is done in this order:
+    1. Parameters passed as arguments to this method
+    2. Parameters obtained from IDR_OMERO_CONFIGURATION_URL
+    3. Parameters obtained from IDR_{HOST,PORT,USER,PASSWORD}
+    4. Built-in defaults
+
     :return: A BlitzGateway object
     """
     import os
     import sys
 
+    autocfg = {}
     config_url = os.getenv('IDR_OMERO_CONFIGURATION_URL')
-    autocfg_host = 'localhost'
-    autocfg_port = 4064
     if config_url:
         try:
-            autocfg_host, autocfg_port = configuration_from_url(config_url)
+            autocfg = configuration_from_url(config_url)
         except Exception as e:
-            print >> sys.stderr, 'Failed to fetch configuration:', e
+            print >> sys.stderr, 'Failed to fetch configuration: %r' % e
 
-    if host is None:
-        host = os.getenv('IDR_HOSTNAME', autocfg_host)
-    if port is None:
-        port = os.getenv('IDR_PORT', autocfg_port)
-    if user is None:
-        user = os.getenv('IDR_USER', 'omero')
-    if password is None:
-        password = os.getenv('IDR_PASSWORD', 'omero')
+    host = _lookup_parameter(host, 'host', autocfg, 'localhost')
+    port = _lookup_parameter(port, 'port', autocfg, 4064)
+    user = _lookup_parameter(user, 'user', autocfg, 'omero')
+    password = _lookup_parameter(password, 'password', autocfg, 'omero')
+
 
     import omero
     from omero.gateway import BlitzGateway
