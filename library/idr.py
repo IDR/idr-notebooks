@@ -133,22 +133,65 @@ def simple_colocalisation(image):
     plt.show()
 
 
-def connection(host=None, user=None, password=None, port=4064):
+def configuration_from_url(config_url):
+    """
+    OMERO binary protocol doesn't support load balancing nor session pinning
+    so it has to be done client-side by connecting to a random server/port
+    """
+    import random
+    import requests
+
+    r = requests.get(config_url)
+    r.raise_for_status()
+    cfgs = r.json()
+    cfg = random.choice(cfgs)
+    return cfg
+
+
+def _lookup_parameter(initial, paramname, autocfg, default):
+    import os
+    if initial is not None:
+        return initial
+    v = autocfg.get(paramname)
+    if v is not None:
+        return v
+    v = os.getenv('IDR_' + paramname.upper())
+    if v is not None:
+        return v
+    return default
+
+
+def connection(host=None, user=None, password=None, port=None):
     """
     Connect to the IDR analysis OMERO server
+    Lookup of connection parameters is done in this order:
+    1. Parameters passed as arguments to this method
+    2. Parameters obtained from IDR_OMERO_CONFIGURATION_URL
+    3. Parameters obtained from IDR_{HOST,PORT,USER,PASSWORD}
+    4. Built-in defaults
+
     :return: A BlitzGateway object
     """
+    import os
+    import sys
 
-    if host is None:
-        host = os.getenv('IDR_HOSTNAME', 'localhost')
-    if user is None:
-        user = os.getenv('IDR_USER', 'omero')
-    if password is None:
-        password = os.getenv('IDR_PASSWORD', 'omero')
+    autocfg = {}
+    config_url = os.getenv('IDR_OMERO_CONFIGURATION_URL')
+    if config_url:
+        try:
+            autocfg = configuration_from_url(config_url)
+        except Exception as e:
+            print >> sys.stderr, 'Failed to fetch configuration: %r' % e
+
+    host = _lookup_parameter(host, 'host', autocfg, 'localhost')
+    port = _lookup_parameter(port, 'port', autocfg, 4064)
+    user = _lookup_parameter(user, 'user', autocfg, 'omero')
+    password = _lookup_parameter(password, 'password', autocfg, 'omero')
+
 
     import omero
     from omero.gateway import BlitzGateway
-    c = omero.client(host)
+    c = omero.client(host, port)
     c.enableKeepAlive(300)
     c.createSession(user, password)
     conn = BlitzGateway(client_obj=c)
