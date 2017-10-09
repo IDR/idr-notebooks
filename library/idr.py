@@ -191,7 +191,7 @@ def connection(host=None, user=None, password=None, port=None):
 
     import omero
     from omero.gateway import BlitzGateway
-    c = omero.client(host, port)
+    c = omero.client(host, int(port))
     c.enableKeepAlive(300)
     c.createSession(user, password)
     conn = BlitzGateway(client_obj=c)
