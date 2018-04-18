@@ -1,4 +1,12 @@
 #!/bin/sh
+# To check that most notebooks can be executed:
+#
+#    IDR_HOST=<host> -e IDR_USER=<user> -e IDR_PASSWORD=<password> ./test.sh
+#
+# This will exclude notebooks that take a long time to execute or require
+# manual input; you should test these manually in the Jupyter notebook web
+# interface.
+# See the `pytest.mark.xfail` markers in test_notebooks.py for details.
 
 set -eu
 set -x
