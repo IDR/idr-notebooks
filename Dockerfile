@@ -1,4 +1,4 @@
-FROM imagedata/jupyter-docker:0.8.0
+FROM snoopycrimecop/jupyter-docker:master_merge_daily
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 # create a python2 environment (for OMERO-PY compatibility)
