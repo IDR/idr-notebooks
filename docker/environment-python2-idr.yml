@@ -14,6 +14,7 @@ dependencies:
 - markdown=2.6.9=py27_0
 - python-graphviz=0.8.2=py27_0
 - python-igraph=0.7.1.post6=py27_4
+- scikit-learn=0.19.1
 - seaborn=0.8.1=py27_0
 - tqdm=4.19.5=py_0
 # defaults
