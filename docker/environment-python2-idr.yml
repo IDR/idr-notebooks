@@ -5,7 +5,7 @@ channels:
 - defaults
 dependencies:
 # bioconda
-- idr-py=0.2.1=py27_0
+- idr-py=0.3.0=py27_0
 - gseapy=0.9.2=py27_0
 - python-omero=5.3.3=py27_0
 # conda-forge
