@@ -23,6 +23,28 @@ RUN apt-get update \
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
+# Install prerequisites to install R
+RUN apt-get update && \
+    apt-get -y install libssl-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libpcre3 \
+    libpcre3-dev \
+    liblzma-dev \
+    libbz2-dev \
+    libjpeg-dev \
+    libssh2-1-dev \
+    libtiff-dev \
+    libpng-dev \
+    libfftw3-dev
+
+# Install newer version of R. Run apt-get -y install r-base installs version 3.2
+RUN sudo echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" | sudo tee -a /etc/apt/sources.list
+RUN gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+RUN gpg -a --export E084DAB9 | sudo apt-key add -
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends r-recommended r-base
+
 RUN R CMD javareconf
 
 # Required for romero
