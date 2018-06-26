@@ -4,6 +4,15 @@ A set of Python Notebooks to demonstrate how to access the images and metadata f
 
 Full access to IDR metadata and images is provided through the standard OMERO API, documentation for which can be found [here](https://docs.openmicroscopy.org/latest/omero5.4/developers/index.html), with the Python bindings found specifically [here](https://docs.openmicroscopy.org/latest/omero5.4/developers/Python.html). The notebooks in this repository are meant to exemplify the use of that API in the context of the IDR, and the sort of queries that can be done. In particular, they show how to reproduce Figure 1 and Figure 2 of the paper.<sup>[1](#footnote1)</sup> They also make use of the [scipy](https://www.scipy.org/) ecosystem, including [pandas](https://pandas.pydata.org).
 
+To build the image run, in this repository:
+
+    $ docker build -t idr-notebooks .
+
+The image contains the dependencies required to connect to IDR.
+
+To start the image:
+
+    $ docker run -it  -p 8888:8888 idr-notebooks
 
 | **Notebook**                                                               | **Lang** | **Level**     | **Description**                                                                                                                                                                                                                                                                                                                                                                                                    |
 |----------------------------------------------------------------------------|----------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
