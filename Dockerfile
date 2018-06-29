@@ -10,6 +10,9 @@ RUN conda env update -n python2 -f .setup/environment-python2-idr.yml && \
 RUN /opt/conda/envs/python2/bin/python -m ipykernel install --user --name python2 --display-name 'IDR Python 2'
 ADD docker/logo-32x32.png docker/logo-64x64.png .local/share/jupyter/kernels/python2/
 
+# TODO: Remove this when the base-image is updated
+RUN pip install --no-cache "jupyterhub==0.9.*"
+
 # Clone the source git repo into notebooks
 # 20180418: COPY --chown doesn't work on Docker Hub
 #COPY --chown=1000:100 . notebooks
