@@ -1,4 +1,8 @@
 language: ruby
+sudo: required
+services:
+    - docker
+
 rvm:
     - 2.2
 before_script:
@@ -6,3 +10,7 @@ before_script:
 script:
     - awesome_bot --allow-dupe --allow-redirect README.md --base-url https://github.com/IDR/idr-notebooks/blob/master/
     # See https://github.com/dkhamsing/awesome_bot/issues/119 for discussion on usage
+    - docker build -t idr-notebooks .
+    - docker run -d -p 8888:8888 idr-notebooks
+    - sleep 10
+    - curl -fL http://localhost:8888/
