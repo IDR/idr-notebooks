@@ -11,7 +11,8 @@ RUN /opt/conda/envs/python2/bin/python -m ipykernel install --user --name python
 ADD docker/logo-32x32.png docker/logo-64x64.png .local/share/jupyter/kernels/python2/
 
 # TODO: Remove this when the base-image is updated
-RUN pip install --no-cache "jupyterhub==0.9.*"
+RUN pip install --no-cache "jupyterhub==0.9.*" && \
+    jupyter labextension install @jupyterlab/hub-extension
 
 # Clone the source git repo into notebooks
 # 20180418: COPY --chown doesn't work on Docker Hub
