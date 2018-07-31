@@ -205,7 +205,7 @@ gateway.disconnect()
 # Aggregate the CVS files
 delimiter = ","
 csv_files = fnmatch.filter(os.listdir(tmp_dir), '*.csv')
-file = tempfile.TemporaryFile(mode='wb', prefix='idr_0021_merged_results_', suffix='.csv', dir=tmp_dir)
+file = tempfile.TemporaryFile(mode='wb', prefix='idr0021_merged_results_', suffix='.csv', dir=tmp_dir)
 with open(file.name, 'wb') as master:
     master_csv = csv.writer(master)
     path = os.path.join(tmp_dir, csv_files[0])
