@@ -35,8 +35,7 @@ from java.util import ArrayList
 from omero.gateway import Gateway
 from omero.gateway import LoginCredentials
 from omero.gateway import SecurityContext
-from omero.gateway.facility import BrowseFacility
-from omero.gateway.model import ChannelData
+from omero.gateway.facility import BrowseFacility, MetadataFacility
 from omero.log import SimpleLogger
 
 from ij import IJ
@@ -76,41 +75,39 @@ def connect_to_omero():
     return gateway, user
 
 
-def get_images(gateway, ctx, dataset_id):
-    "List all image's ids contained in a dataset"
-
-    browse = gateway.getFacility(BrowseFacility)
-    ids = ArrayList(1)
-    val = Long(dataset_id)
-    ids.add(val)
-    return browse.getImagesForDatasets(ctx, ids)
-
-
 def get_datasets(gateway, ctx, project_id):
-    "List all datasets contained in a Project"
+    "List all dataset's ids contained in a Project"
 
     browse = gateway.getFacility(BrowseFacility)
     ids = ArrayList(1)
     val = Long(project_id)
     ids.add(val)
     projects = browse.getProjects(ctx, ids)
-    j = projects.iterator()
+    return projects[0].getDatasets()
+
+
+def get_image_ids(gateway, ctx, dataset_id):
+    "List all image's ids contained in a Dataset"
+
+    browse = gateway.getFacility(BrowseFacility)
+
+    ids = ArrayList(1)
+    val = Long(dataset_id)
+    ids.add(val)
+    images = browse.getImagesForDatasets(ctx, ids)
+
+    j = images.iterator()
+    image_ids = []
     while j.hasNext():
-        return j.next().getDatasets()
+        image = j.next()
+        image_ids.append(image.getId())
+    return image_ids
 
 
-def get_channels_data(gateway, ctx, pixels_id):
-
-    svc = gateway.getPixelsService(ctx)
-    pixels = svc.retrievePixDescription(pixels_id)
-    channels = pixels.copyChannels()
-    data = []
-    j = channels.iterator()
-    count = 0
-    while j.hasNext():
-        data.append(ChannelData(count, j.next()))
-        count = count + 1
-    return data
+def get_channels_data(gateway, ctx, image_id):
+    "List the channels data associated to the specified image"
+    svc = gateway.getFacility(MetadataFacility)
+    return svc.getChannelData(ctx, image_id)
 
 
 def open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, image_id):
@@ -167,23 +164,19 @@ while j.hasNext():
     name = d.getName()
     # for each dataset load the images
     # get all images_ids in the dataset
-    images = get_images(gateway, ctx, d.getId())
-    i = images.iterator()
-    while i.hasNext():
-        image = i.next()
-        id1 = image.getId()
-        pixels_id = image.getDefaultPixels().getId()
+    image_ids = get_image_ids(gateway, ctx, d.getId())
+    for id in image_ids:
         channel_index = 1
         # Find the index of the channel matching the dataset name
-        channels = get_channels_data(gateway, ctx, pixels_id)
-
-        for x in range(len(channels)):
-            channel = channels[x]
+        channels = get_channels_data(gateway, ctx, id)
+        i = channels.iterator()
+        while i.hasNext():
+            channel = i.next()
             if name == channel.getChannelLabeling():
                 channel_index = channel.getIndex()+1
                 break
 
-        open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id1)
+        open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id)
         imp = IJ.getImage()
         # Some analysis which creates ROI's and Results Table
         IJ.run("8-bit")
@@ -196,8 +189,8 @@ while j.hasNext():
         # Rename the table so we can read the summary table
         IJ.renameResults("Results")
         rt = ResultsTable.getResultsTable()
-        print "saving locally results for image with ID" + str(id1)
-        save_as_csv(rt, id1, tmp_dir, channel_index)
+        print "saving locally results for image with ID" + str(id)
+        save_as_csv(rt, id, tmp_dir, channel_index)
         # Close the various components
         IJ.selectWindow("Results")
         IJ.run("Close")
