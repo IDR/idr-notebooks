@@ -1,0 +1,180 @@
+# -----------------------------------------------------------------------------
+#  Copyright (C) 2018 University of Dundee. All rights reserved.
+#
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+#  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# ------------------------------------------------------------------------------
+
+# This Jython script uses ImageJ to analyse particles, and saved the results
+# locally in a CSV file.
+# Use this script in the Scripting Dialog of Fiji (File > New > Script).
+# Select Python as language in the Scripting Dialog.
+# Error handling is omitted to ease the reading of the script but
+# this should be added
+# if used in production to make sure the services are closed
+# Information can be found at
+# https://docs.openmicroscopy.org/latest/omero/developers/Java.html
+
+
+from java.lang import Long
+from java.util import ArrayList
+
+# OMERO Dependencies
+from omero.gateway import Gateway
+from omero.gateway import LoginCredentials
+from omero.gateway import SecurityContext
+from omero.gateway.facility import BrowseFacility
+from omero.log import SimpleLogger
+
+
+from ij.plugin.frame import RoiManager
+from ij.measure import ResultsTable
+
+# Import required to save the results as CSV
+import csv
+import os
+import fnmatch
+import tempfile
+
+# Setup
+# =====
+
+# OMERO Server details
+HOST = "idr.openmicroscopy.org"
+PORT = 4064
+type = "project"
+object_id = 51
+USERNAME = "USERNAME"
+PASSWORD = "PASSWORD"
+
+
+def connect_to_omero():
+    "Connect to OMERO. Returns a reference to the gateway"
+
+    credentials = LoginCredentials()
+    credentials.getServer().setHostname(HOST)
+    credentials.getServer().setPort(PORT)
+    credentials.getUser().setUsername(USERNAME.strip())
+    credentials.getUser().setPassword(PASSWORD.strip())
+    simpleLogger = SimpleLogger()
+    gateway = Gateway(simpleLogger)
+
+    user = gateway.connect(credentials)
+    print user.getGroupId()
+    return gateway, user
+
+
+def get_image_ids(gateway, ctx, object_id, type):
+    "List all image's ids contained in a Project or dataset"
+
+    browse = gateway.getFacility(BrowseFacility)
+    ids = ArrayList(1)
+    val = Long(object_id)
+    ids.add(val)
+    if type == "project":
+        images = browse.getImagesForProjects(ctx, ids)
+    elif type == "dataset":
+        images = browse.getImagesForDatasets(ctx, ids)
+
+    j = images.iterator()
+    image_ids = []
+    while j.hasNext():
+        image = j.next()
+        image_ids.append(image.getId())
+    return image_ids
+
+
+def open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, image_id):
+    "Open the image using the Bio-Formats Importer"
+
+    options = """location=[OMERO]
+open=[omero:server=%s
+user=%s
+port=%s
+pass=%s
+groupID=%s
+iid=%s]
+ windowless=true """ % (HOST, USERNAME, PORT, PASSWORD, group_id, image_id)
+    IJ.runPlugIn("loci.plugins.LociImporter", options)
+
+
+def save_as_csv(rt, image_id, tmp_dir):
+    # insert the image ID for each row
+    for i in range(0, rt.size()):
+        rt.setValue("omero.image.id", i, str(image_id))
+    # Create a tmp file and save the result
+    file = tempfile.NamedTemporaryFile(mode='wb', prefix=str(image_id), suffix='.csv', dir=tmp_dir, delete=False)
+    rt.updateResults()
+    rt.saveAs(file.name)
+
+# Connect
+gateway, user = connect_to_omero()
+group_id = user.getGroupId()
+ctx = SecurityContext(group_id)
+exp = gateway.getLoggedInUser()
+exp_id = exp.getId()
+
+# get all images_ids in an omero project or dataset
+ids = get_image_ids(gateway, ctx, object_id, type)
+
+tmp_dir = tempfile.tempdir
+
+for id1 in ids:
+    open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id1)
+    imp = IJ.getImage()
+    # Some analysis which creates ROI's and Results Table
+    IJ.run("8-bit")
+    IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
+    IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack")
+    IJ.run("Set Measurements...", "area mean standard modal min centroid center \
+            perimeter bounding fit shape feret's integrated median skewness \
+            kurtosis area_fraction stack display redirect=None decimal=3")
+
+    rm = RoiManager.getInstance()
+    rm.runCommand(imp, "Measure")
+    rt = ResultsTable.getResultsTable()
+    print "saving locally results for image with ID" + str(id1)
+    save_as_csv(rt, id1, tmp_dir)
+    # Close the various components
+    IJ.selectWindow("Results")
+    IJ.run("Close")
+    IJ.selectWindow("ROI Manager")
+    IJ.run("Close")
+    imp.changes = False     # Prevent "Save Changes?" dialog
+    imp.close()
+
+# Close the connection
+gateway.disconnect()
+
+# Aggregate the CVS files
+delimiter = ","
+csv_files = fnmatch.filter(os.listdir(tmp_dir), '*.csv')
+file = tempfile.TemporaryFile(mode='wb', prefix='idr_0021_merged_results_', suffix='.csv', dir=tmp_dir)
+with open(file.name, 'wb') as master:
+    master_csv = csv.writer(master)
+    path = os.path.join(tmp_dir, csv_files[0])
+    with open(path, 'rb') as csv_file:
+        headers = csv_file.readline().strip().split(delimiter)
+        master_csv.writerow(headers)
+        for line in csv_file:
+            master_csv.writerow(line.strip().split(delimiter))
+    for f in csv_files[1:]:
+        path = os.path.join(tmp_dir, f)
+        with open(path, 'rb') as csv_file:
+            for line_num, line in enumerate(csv_file):
+                if line_num > 0:
+                    master_csv.writerow(line.strip().split(delimiter))
+
+print "processing done"
