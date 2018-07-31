@@ -1,0 +1,9 @@
+{
+ "display_name": "IDR Python 2",
+ "language": "python",
+ "argv": [
+  "/bin/bash",
+  "-c",
+  "source activate python2 && python -m ipykernel_launcher -f {connection_file}"
+ ]
+}
