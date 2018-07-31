@@ -36,9 +36,10 @@ from omero.gateway import Gateway
 from omero.gateway import LoginCredentials
 from omero.gateway import SecurityContext
 from omero.gateway.facility import BrowseFacility
+from omero.gateway.model import ChannelData
 from omero.log import SimpleLogger
 
-
+from ij import IJ
 from ij.plugin.frame import RoiManager
 from ij.measure import ResultsTable
 
@@ -54,8 +55,7 @@ import tempfile
 # OMERO Server details
 HOST = "idr.openmicroscopy.org"
 PORT = 4064
-type = "project"
-object_id = 51
+project_id = 51
 USERNAME = "USERNAME"
 PASSWORD = "PASSWORD"
 
@@ -76,24 +76,41 @@ def connect_to_omero():
     return gateway, user
 
 
-def get_image_ids(gateway, ctx, object_id, type):
-    "List all image's ids contained in a Project or dataset"
+def get_images(gateway, ctx, dataset_id):
+    "List all image's ids contained in a dataset"
 
     browse = gateway.getFacility(BrowseFacility)
     ids = ArrayList(1)
-    val = Long(object_id)
+    val = Long(dataset_id)
     ids.add(val)
-    if type == "project":
-        images = browse.getImagesForProjects(ctx, ids)
-    elif type == "dataset":
-        images = browse.getImagesForDatasets(ctx, ids)
+    return browse.getImagesForDatasets(ctx, ids)
 
-    j = images.iterator()
-    image_ids = []
+
+def get_datasets(gateway, ctx, project_id):
+    "List all datasets contained in a Project"
+
+    browse = gateway.getFacility(BrowseFacility)
+    ids = ArrayList(1)
+    val = Long(project_id)
+    ids.add(val)
+    projects = browse.getProjects(ctx, ids)
+    j = projects.iterator()
     while j.hasNext():
-        image = j.next()
-        image_ids.append(image.getId())
-    return image_ids
+        return j.next().getDatasets()
+
+
+def get_channels_data(gateway, ctx, pixels_id):
+
+    svc = gateway.getPixelsService(ctx)
+    pixels = svc.retrievePixDescription(pixels_id)
+    channels = pixels.copyChannels()
+    data = []
+    j = channels.iterator()
+    count = 0
+    while j.hasNext():
+        data.append(ChannelData(count, j.next()))
+        count = count + 1
+    return data
 
 
 def open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, image_id):
@@ -110,10 +127,24 @@ iid=%s]
     IJ.runPlugIn("loci.plugins.LociImporter", options)
 
 
-def save_as_csv(rt, image_id, tmp_dir):
+def save_as_csv(rt, image_id, tmp_dir, channel_index):
+    # Remove the rows not corresponding to the specified channel
+    to_delete = []
+    ref = "c:" + str(channel_index)
+    for i in range(0, rt.size()):
+        value = rt.getStringValue("Slice", i)
+        if value.startswith(ref):
+            print value
+        else:
+            to_delete.append(i)
+    # Delete the rows we do not need
+    for index, value in enumerate(to_delete):
+        v = value-index
+        rt.deleteRow(v)
+    rt.updateResults()
     # insert the image ID for each row
     for i in range(0, rt.size()):
-        rt.setValue("omero.image.id", i, str(image_id))
+        rt.setValue("Image", i, str(image_id))
     # Create a tmp file and save the result
     file = tempfile.NamedTemporaryFile(mode='wb', prefix=str(image_id), suffix='.csv', dir=tmp_dir, delete=False)
     rt.updateResults()
@@ -126,34 +157,54 @@ ctx = SecurityContext(group_id)
 exp = gateway.getLoggedInUser()
 exp_id = exp.getId()
 
-# get all images_ids in an omero project or dataset
-ids = get_image_ids(gateway, ctx, object_id, type)
-
 tmp_dir = tempfile.tempdir
 
-for id1 in ids:
-    open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id1)
-    imp = IJ.getImage()
-    # Some analysis which creates ROI's and Results Table
-    IJ.run("8-bit")
-    IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
-    IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack")
-    IJ.run("Set Measurements...", "area mean standard modal min centroid center \
-            perimeter bounding fit shape feret's integrated median skewness \
-            kurtosis area_fraction stack display redirect=None decimal=3")
+# get all the dataset_ids in an project
+datasets = get_datasets(gateway, ctx, project_id)
+j = datasets.iterator()
+while j.hasNext():
+    d = j.next()
+    name = d.getName()
+    # for each dataset load the images
+    # get all images_ids in the dataset
+    images = get_images(gateway, ctx, d.getId())
+    i = images.iterator()
+    while i.hasNext():
+        image = i.next()
+        id1 = image.getId()
+        pixels_id = image.getDefaultPixels().getId()
+        channel_index = 1
+        # Find the index of the channel matching the dataset name
+        channels = get_channels_data(gateway, ctx, pixels_id)
 
-    rm = RoiManager.getInstance()
-    rm.runCommand(imp, "Measure")
-    rt = ResultsTable.getResultsTable()
-    print "saving locally results for image with ID" + str(id1)
-    save_as_csv(rt, id1, tmp_dir)
-    # Close the various components
-    IJ.selectWindow("Results")
-    IJ.run("Close")
-    IJ.selectWindow("ROI Manager")
-    IJ.run("Close")
-    imp.changes = False     # Prevent "Save Changes?" dialog
-    imp.close()
+        for x in range(len(channels)):
+            channel = channels[x]
+            if name == channel.getChannelLabeling():
+                channel_index = channel.getIndex()+1
+                break
+
+        open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id1)
+        imp = IJ.getImage()
+        # Some analysis which creates ROI's and Results Table
+        IJ.run("8-bit")
+        IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
+        IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack summarize")
+        IJ.run("Set Measurements...", "area mean standard min stack display summarize redirect=None decimal=3")
+
+        rm = RoiManager.getInstance()
+        rm.runCommand(imp, "Measure")
+        # Rename the table so we can read the summary table
+        IJ.renameResults("Results")
+        rt = ResultsTable.getResultsTable()
+        print "saving locally results for image with ID" + str(id1)
+        save_as_csv(rt, id1, tmp_dir, channel_index)
+        # Close the various components
+        IJ.selectWindow("Results")
+        IJ.run("Close")
+        IJ.selectWindow("ROI Manager")
+        IJ.run("Close")
+        imp.changes = False     # Prevent "Save Changes?" dialog
+        imp.close()
 
 # Close the connection
 gateway.disconnect()
