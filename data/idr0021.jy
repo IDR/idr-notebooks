@@ -227,11 +227,13 @@ with open(file.name, 'wb') as master:
         master_csv.writerow(headers)
         for line in csv_file:
             master_csv.writerow(line.strip().split(delimiter))
+    os.remove(path)
     for f in csv_files[1:]:
         path = os.path.join(tmp_dir, f)
         with open(path, 'rb') as csv_file:
             for line_num, line in enumerate(csv_file):
                 if line_num > 0:
                     master_csv.writerow(line.strip().split(delimiter))
+        os.remove(path)
 
 print "processing done"
