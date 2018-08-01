@@ -124,10 +124,29 @@ iid=%s]
     IJ.runPlugIn("loci.plugins.LociImporter", options)
 
 
-def save_as_csv(rt, image_id, tmp_dir, channel_index):
+def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
+    "Create a summary table from the original table"
     # Remove the rows not corresponding to the specified channel
     to_delete = []
     ref = "c:" + str(channel_index)
+    max_mean = 0
+    sum_mean = 0
+    max_max = 0
+    sum_area = 0
+    max_area = 0
+    for i in range(0, rt.size()):
+        value = rt.getStringValue("Mean", i)
+        max_mean = max(value, max_mean)
+        sum_mean = sum_mean + float(value)
+        value = rt.getStringValue("Max", i)
+        max_max = max(value, max)
+        value = rt.getStringValue("Area", i)
+        sum_area = sum_area + float(value)
+        max_area = max(value, max_area)
+
+    # Rename the table so we can read the summary table
+    IJ.renameResults("Results")
+    rt = ResultsTable.getResultsTable()
     for i in range(0, rt.size()):
         value = rt.getStringValue("Slice", i)
         if value.startswith(ref):
@@ -139,9 +158,23 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index):
         v = value-index
         rt.deleteRow(v)
     rt.updateResults()
-    # insert the image ID for each row
+    # Insert values in summary table
     for i in range(0, rt.size()):
         rt.setValue("Image", i, str(image_id))
+    for i in range(0, rt.size()):
+        rt.setValue("Dataset", i, dataset_name)
+    for i in range(0, rt.size()):
+        rt.setValue("Mean", i, max_mean)
+    for i in range(0, rt.size()):
+        rt.setValue("Sum_Mean", i, sum_mean)
+    for i in range(0, rt.size()):
+        rt.setValue("Max", i, max_max)
+    for i in range(0, rt.size()):
+        rt.setValue("Max_Area", i, max_area)
+    for i in range(0, rt.size()):
+        rt.setValue("Sum_Area", i, sum_area)
+    for i in range(0, rt.size()):
+        rt.setValue("Dataset", i, name)      
     # Create a tmp file and save the result
     file = tempfile.NamedTemporaryFile(mode='wb', prefix=str(image_id), suffix='.csv', dir=tmp_dir, delete=False)
     rt.updateResults()
@@ -182,15 +215,13 @@ while j.hasNext():
         IJ.run("8-bit")
         IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
         IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack summarize")
-        IJ.run("Set Measurements...", "area mean standard min stack display summarize redirect=None decimal=3")
+        IJ.run("Set Measurements...", "area mean standard modal min centroid center perimeter summarize stack display redirect=None decimal=3")
 
         rm = RoiManager.getInstance()
         rm.runCommand(imp, "Measure")
-        # Rename the table so we can read the summary table
-        IJ.renameResults("Results")
         rt = ResultsTable.getResultsTable()
-        print "saving locally results for image with ID" + str(id)
-        save_as_csv(rt, id, tmp_dir, channel_index)
+        print "saving locally results for image with ID " + str(id)
+        save_as_csv(rt, id, tmp_dir, channel_index, name)
         # Close the various components
         IJ.selectWindow("Results")
         IJ.run("Close")
