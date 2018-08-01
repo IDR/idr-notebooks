@@ -129,20 +129,12 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     # Remove the rows not corresponding to the specified channel
     to_delete = []
     ref = "c:" + str(channel_index)
-    max_mean = 0
-    sum_mean = 0
-    max_max = 0
-    sum_area = 0
-    max_area = 0
+    max_bouding_box = 0
     for i in range(0, rt.size()):
-        value = rt.getStringValue("Mean", i)
-        max_mean = max(value, max_mean)
-        sum_mean = sum_mean + float(value)
-        value = rt.getStringValue("Max", i)
-        max_max = max(value, max)
-        value = rt.getStringValue("Area", i)
-        sum_area = sum_area + float(value)
-        max_area = max(value, max_area)
+        w = rt.getStringValue("Width", i)
+        h = rt.getStringValue("Height", i)
+        area = float(w)*float(h)
+        max_bouding_box = max(area, max_bouding_box)
 
     # Rename the table so we can read the summary table
     IJ.renameResults("Results")
@@ -164,17 +156,7 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     for i in range(0, rt.size()):
         rt.setValue("Dataset", i, dataset_name)
     for i in range(0, rt.size()):
-        rt.setValue("Mean", i, max_mean)
-    for i in range(0, rt.size()):
-        rt.setValue("Sum_Mean", i, sum_mean)
-    for i in range(0, rt.size()):
-        rt.setValue("Max", i, max_max)
-    for i in range(0, rt.size()):
-        rt.setValue("Max_Area", i, max_area)
-    for i in range(0, rt.size()):
-        rt.setValue("Sum_Area", i, sum_area)
-    for i in range(0, rt.size()):
-        rt.setValue("Dataset", i, name)      
+        rt.setValue("Bouding_Box", i, max_bouding_box)     
     # Create a tmp file and save the result
     file = tempfile.NamedTemporaryFile(mode='wb', prefix=str(image_id), suffix='.csv', dir=tmp_dir, delete=False)
     rt.updateResults()
@@ -215,7 +197,7 @@ while j.hasNext():
         IJ.run("8-bit")
         IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
         IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack summarize")
-        IJ.run("Set Measurements...", "area mean standard modal min centroid center perimeter summarize stack display redirect=None decimal=3")
+        IJ.run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding summarize stack display redirect=None decimal=3")
 
         rm = RoiManager.getInstance()
         rm.runCommand(imp, "Measure")
