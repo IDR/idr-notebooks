@@ -131,10 +131,12 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     ref = "c:" + str(channel_index)
     max_bounding_box = 0
     for i in range(0, rt.size()):
-        w = rt.getStringValue("Width", i)
-        h = rt.getStringValue("Height", i)
-        area = float(w)*float(h)
-        max_bounding_box = max(area, max_bounding_box)
+        label = rt.getStringValue("Label", i)
+        if ref in label:
+            w = rt.getStringValue("Width", i)
+            h = rt.getStringValue("Height", i)
+            area = float(w)*float(h)
+            max_bounding_box = max(area, max_bounding_box)
 
     # Rename the table so we can read the summary table
     IJ.renameResults("Results")
@@ -197,7 +199,7 @@ while j.hasNext():
         IJ.run("8-bit")
         IJ.run(imp, "Auto Threshold", "method=MaxEntropy stack")
         IJ.run(imp, "Analyze Particles...", "size=10-Infinity pixel display clear add stack summarize")
-        IJ.run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding summarize stack display redirect=None decimal=3")
+        IJ.run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding feret's summarize stack display redirect=None decimal=3")
 
         rm = RoiManager.getInstance()
         rm.runCommand(imp, "Measure")
