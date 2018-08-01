@@ -1,4 +1,4 @@
-Slice,Count,Total Area,Average Size,%Area,Mean,Mode,Perim.,Image,Dataset,Bouding_Box
+Slice,Count,Total Area,Average Size,%Area,Mean,Mode,Perim.,Image,Dataset,Bounding_Box
 c:1/3 - Centrin_PCNT_Cep215_20110506_Fri-1545_0_SIR_PRJ.dv,5,0.367,0.073,0.357,0,0,1.141,1884807,CDK5RAP2-C,0.387
 c:1/3 - Centrin_PCNT_Cep215_20110506_Fri-1559_0_SIR_PRJ.dv,4,0.218,0.054,0.212,0,0,1.003,1884808,CDK5RAP2-C,1.082
 c:1/3 - Centrin_PCNT_Cep215_20110506_Fri-1608_0_SIR_PRJ.dv,4,0.114,0.029,0.111,0,0,0.604,1884809,CDK5RAP2-C,0.722
