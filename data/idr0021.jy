@@ -36,6 +36,8 @@ from omero.gateway import Gateway
 from omero.gateway import LoginCredentials
 from omero.gateway import SecurityContext
 from omero.gateway.facility import BrowseFacility, MetadataFacility
+from omero.gateway.model import MapAnnotationData, ImageData
+from omero.model import ImageI
 from omero.log import SimpleLogger
 
 from ij import IJ
@@ -58,6 +60,8 @@ project_id = 51
 USERNAME = "USERNAME"
 PASSWORD = "PASSWORD"
 
+NAMESPACE = "openmicroscopy.org/omero/bulk_annotations"
+MAP_KEY = "Channels"
 
 def connect_to_omero():
     "Connect to OMERO. Returns a reference to the gateway"
@@ -108,6 +112,35 @@ def get_channels_data(gateway, ctx, image_id):
     "List the channels data associated to the specified image"
     svc = gateway.getFacility(MetadataFacility)
     return svc.getChannelData(ctx, image_id)
+
+
+def get_channel_wavelength(gateway, ctx, image_id, dataset_name):
+    "Load the map annotations and find the channel's wavelength matching the dataset name"
+    svc = gateway.getFacility(MetadataFacility)
+    types = ArrayList(1)
+    types.add(MapAnnotationData)
+    data = ImageData(ImageI(image_id, False))
+    annotations = svc.getAnnotations(ctx, data, types, None)
+    # Iterate through annotation
+    j = annotations.iterator()
+    while j.hasNext():
+        annotation = j.next()
+        if annotation.getNameSpace() == NAMESPACE:
+            named_values = annotation.getContent()
+            i = named_values.iterator()
+            while i.hasNext():
+                nv = i.next()
+                if nv.name == MAP_KEY:
+                    channels = nv.value.split("; ")
+                    print channels
+                    for c, ch_name in enumerate(channels):
+                        values = ch_name.split(":")
+                        name = values[1]
+                        print dataset_name
+                        if name in dataset_name:
+                            print name
+                            return values[0]
+                            break
 
 
 def open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, image_id):
@@ -183,12 +216,16 @@ while j.hasNext():
     for id in image_ids:
         channel_index = 1
         # Find the index of the channel matching the dataset name
+        channel_wavelength = get_channel_wavelength(gateway, ctx, id, name)
+        print channel_wavelength
         channels = get_channels_data(gateway, ctx, id)
         i = channels.iterator()
         while i.hasNext():
             channel = i.next()
-            if name == channel.getChannelLabeling():
+            print channel.getChannelLabeling()
+            if channel_wavelength == channel.getChannelLabeling():
                 channel_index = channel.getIndex()+1
+                print channel_index
                 break
 
         open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id)
