@@ -154,8 +154,6 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     rt.updateResults()
     # Insert values in summary table
     for i in range(0, rt.size()):
-        rt.setValue("Image", i, str(image_id))
-    for i in range(0, rt.size()):
         rt.setValue("Dataset", i, dataset_name)
     for i in range(0, rt.size()):
         rt.setValue("Bounding_Box", i, max_bounding_box)     
