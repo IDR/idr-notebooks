@@ -217,11 +217,13 @@ while j.hasNext():
         i = channels.iterator()
         while i.hasNext():
             channel = i.next()
-            v = str(int(channel.getEmissionWavelength(None).getValue()))
-            if channel_wavelength == v:
-                channel_index = channel.getIndex()+1
-                print "Found index: "+str(channel_index)
-                break
+            em = channel.getEmissionWavelength(None)
+            if em is not None:
+                v = str(int(em.getValue()))
+                if channel_wavelength == v:
+                    channel_index = channel.getIndex()+1
+                    print "Found index: "+str(channel_index)
+                    break
 
         open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id)
         imp = IJ.getImage()
