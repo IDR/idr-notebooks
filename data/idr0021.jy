@@ -63,6 +63,7 @@ PASSWORD = "PASSWORD"
 NAMESPACE = "openmicroscopy.org/omero/bulk_annotations"
 MAP_KEY = "Channels"
 
+
 def connect_to_omero():
     "Connect to OMERO. Returns a reference to the gateway"
 
@@ -132,13 +133,10 @@ def get_channel_wavelength(gateway, ctx, image_id, dataset_name):
                 nv = i.next()
                 if nv.name == MAP_KEY:
                     channels = nv.value.split("; ")
-                    print channels
                     for c, ch_name in enumerate(channels):
                         values = ch_name.split(":")
                         name = values[1]
-                        print dataset_name
                         if name in dataset_name:
-                            print name
                             return values[0]
                             break
 
@@ -176,9 +174,7 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     rt = ResultsTable.getResultsTable()
     for i in range(0, rt.size()):
         value = rt.getStringValue("Slice", i)
-        if value.startswith(ref):
-            print value
-        else:
+        if not value.startswith(ref):
             to_delete.append(i)
     # Delete the rows we do not need
     for index, value in enumerate(to_delete):
@@ -189,7 +185,7 @@ def save_as_csv(rt, image_id, tmp_dir, channel_index, dataset_name):
     for i in range(0, rt.size()):
         rt.setValue("Dataset", i, dataset_name)
     for i in range(0, rt.size()):
-        rt.setValue("Bounding_Box", i, max_bounding_box)     
+        rt.setValue("Bounding_Box", i, max_bounding_box)
     # Create a tmp file and save the result
     file = tempfile.NamedTemporaryFile(mode='wb', prefix=str(image_id), suffix='.csv', dir=tmp_dir, delete=False)
     rt.updateResults()
@@ -215,17 +211,16 @@ while j.hasNext():
     image_ids = get_image_ids(gateway, ctx, d.getId())
     for id in image_ids:
         channel_index = 1
-        # Find the index of the channel matching the dataset name
+        # Find the index of the channel matching the dataset name as a string
         channel_wavelength = get_channel_wavelength(gateway, ctx, id, name)
-        print channel_wavelength
         channels = get_channels_data(gateway, ctx, id)
         i = channels.iterator()
         while i.hasNext():
             channel = i.next()
-            print channel.getChannelLabeling()
-            if channel_wavelength == channel.getChannelLabeling():
+            v = str(int(channel.getEmissionWavelength(None).getValue()))
+            if channel_wavelength == v:
                 channel_index = channel.getIndex()+1
-                print channel_index
+                print "Found index: "+str(channel_index)
                 break
 
         open_image_plus(HOST, USERNAME, PASSWORD, PORT, group_id, id)
