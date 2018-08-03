@@ -42,4 +42,7 @@ RUN cd /opt/romero && \
     curl -sf https://raw.githubusercontent.com/ome/rOMERO-gateway/$ROMERO_VERSION/install.R --output install.R && \
     bash -c "source activate r-omero && Rscript install.R --version=$ROMERO_VERSION --quiet"
 
+# Experimental: Install nbval for testing reproducibility of notebooks
+RUN conda install nbval
+
 COPY --chown=1000:100 . notebooks
