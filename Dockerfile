@@ -1,11 +1,11 @@
-FROM imagedata/jupyter-docker:0.8.1
+FROM imagedata/jupyter-docker:0.8.2
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 # create a python2 environment (for OMERO-PY compatibility)
 ADD docker/environment-python2-idr.yml .setup/
 RUN conda env update -n python2 -q -f .setup/environment-python2-idr.yml && \
     # Jupyterlab component for bokeh (must match jupyterlab version) \
-    jupyter labextension install jupyterlab_bokeh@^0.5.0
+    jupyter labextension install jupyterlab_bokeh@^0.6.0
 
 # Don't use this:
 # /opt/conda/envs/python2/bin/python -m ipykernel install --user --name python2 --display-name 'IDR Python 2'
