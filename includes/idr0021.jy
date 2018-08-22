@@ -145,7 +145,7 @@ port=%s
 pass=%s
 groupID=%s
 iid=%s]
- windowless=true """ % (HOST, USERNAME, PORT, PASSWORD, group_id, image_id)
+ windowless=true view=Hyperstack """ % (HOST, USERNAME, PORT, PASSWORD, group_id, image_id)
     IJ.runPlugIn("loci.plugins.LociImporter", options)
 
 
