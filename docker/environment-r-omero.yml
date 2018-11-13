@@ -8,7 +8,7 @@ dependencies:
 - openjdk=8.0.*
 - r-assertthat=0.2.*
 # https://github.com/ContinuumIO/anaconda-issues/issues/4656
-- r-base=3.3.*
+- r-base=3.4.*
 - r-devtools=1.13.*
 - r-git2r=0.19.*
 - r-httr=1.3.*
