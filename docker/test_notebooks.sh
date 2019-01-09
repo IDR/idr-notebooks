@@ -23,6 +23,7 @@ errors=0
 # Full reproducibility: output of notebook cells should match the saved cells
 pytest --nbval \
     notebooks/README.ipynb \
+    notebooks/SysgroRoiLength.ipynb \
     notebooks/Using_Jupyter.ipynb \
 
 [ $? -eq 0 ] || {
