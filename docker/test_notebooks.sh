@@ -22,6 +22,7 @@ errors=0
 
 # Full reproducibility: output of notebook cells should match the saved cells
 pytest --nbval \
+    notebooks/CalculateSharpness.ipynb \
     notebooks/README.ipynb \
     notebooks/SysgroRoiLength.ipynb \
     notebooks/Using_Jupyter.ipynb \
@@ -34,7 +35,6 @@ pytest --nbval \
 # Run without error: don't compare output of cells
 # These notebooks should be modified to pass without -lax
 pytest --nbval-lax \
-    notebooks/CalculateSharpness.ipynb \
     notebooks/GeneNetwork.ipynb \
     notebooks/GenesToPhenotypes.ipynb \
     notebooks/Getting_Started.ipynb \

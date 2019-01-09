@@ -17,5 +17,4 @@ docker run -d --name test-jupyter-docker \
     -e IDR_USER="$IDR_USER" \
     -e IDR_PASSWORD="$IDR_PASSWORD" \
     test-jupyter-docker
-docker cp test_notebooks.sh test-jupyter-docker:/
-docker exec test-jupyter-docker /test_notebooks.sh
+docker exec test-jupyter-docker /home/jovyan/notebooks/docker/test_notebooks.sh
