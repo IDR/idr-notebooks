@@ -23,6 +23,7 @@ errors=0
 # Full reproducibility: output of notebook cells should match the saved cells
 pytest --nbval \
     notebooks/CalculateSharpness.ipynb \
+    notebooks/IDR_API_example_script.ipynb \
     notebooks/README.ipynb \
     notebooks/SysgroRoiLength.ipynb \
     notebooks/Using_Jupyter.ipynb \
@@ -38,7 +39,6 @@ pytest --nbval-lax \
     notebooks/GeneNetwork.ipynb \
     notebooks/GenesToPhenotypes.ipynb \
     notebooks/Getting_Started.ipynb \
-    notebooks/IDR_API_example_script.ipynb \
 
 # Not yet tested
 # pytest.mark.xfail(reason='Takes too long to run')(
