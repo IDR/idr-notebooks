@@ -1,4 +1,4 @@
-FROM imagedata/jupyter-docker:0.9.0
+FROM imagedata/jupyter-docker:0.9.2
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 # create a python2 environment (for OMERO-PY compatibility)
