@@ -18,7 +18,7 @@ ADD docker/environment-python2-cellprofiler.yml .setup/
 RUN conda env update -n python2 -q -f .setup/environment-python2-cellprofiler.yml
 # CellProfiler has to be installed in a separate step because it requires
 # the JAVA_HOME environment variable set in the updated environment
-ARG CELLPROFILER_VERSION=v3.1.3
+ARG CELLPROFILER_VERSION=v3.1.8
 RUN bash -c "source activate python2 && pip install git+https://github.com/CellProfiler/CellProfiler.git@$CELLPROFILER_VERSION"
 
 # R-kernel and R-OMERO prerequisites
