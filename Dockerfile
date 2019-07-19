@@ -37,6 +37,7 @@ USER $NB_UID
 
 # install rOMERO
 ENV _JAVA_OPTIONS="-Xss2560k -Xmx2g"
+ENV OMERO_LIBS_DOWNLOAD=TRUE
 ARG ROMERO_VERSION=v0.4.7
 RUN cd /opt/romero && \
     curl -sf https://raw.githubusercontent.com/ome/rOMERO-gateway/$ROMERO_VERSION/install.R --output install.R && \
