@@ -29,5 +29,6 @@ dependencies:
   - tifffile=0.15.*
   - wxpython=4.0.*
   - tornado=4.5.3 # bug with version 5.0. This implies that the kernel cannot start
+  - mysql-connector-python
   - pip:
     - cellh5
