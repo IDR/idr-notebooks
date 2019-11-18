@@ -1,0 +1,38 @@
+name: python2
+channels:
+- bioconda
+- conda-forge
+- defaults
+- manics
+dependencies:
+# bioconda
+# - idr-py=0.3.0=py27_0
+- gseapy=0.9.8=py36_0
+# conda-forge
+- bokeh=1.4.0=py36_0
+- joblib=0.12.1=py36_0
+- markdown=3.1=py36_0
+- python-graphviz=0.13=py_0
+- python-igraph=0.7.1.post6=py36_4
+- scikit-learn=0.20.*
+- seaborn=0.9.0=py36_0
+- tqdm=4.36.1=py_0
+# defaults
+- pydot=1.3.0=py36_0
+# tmp
+# bioconda
+- zeroc-ice-python
+# conda-forge
+- ipywidgets=7.4.*
+- matplotlib=3.1.*
+- pandas=0.25.*
+- pillow=6.*
+- pytables=3.4.*
+- pytest=5.2.*
+- python=3.6.*
+- scikit-image=0.16.*
+- scipy=1.3.*
+- pip:
+  - py2cytoscape==0.7.1
+  # tmp
+  - omero-py==5.6.dev3
