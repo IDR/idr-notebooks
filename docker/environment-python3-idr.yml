@@ -3,7 +3,7 @@ channels:
 - bioconda
 - conda-forge
 - defaults
-- manics
+- ome
 dependencies:
 # bioconda
 # - idr-py=0.3.0=py27_0
@@ -21,7 +21,7 @@ dependencies:
 - pydot=1.3.0=py36_0
 # tmp
 # bioconda
-- zeroc-ice-python
+- zeroc-ice36-python
 # conda-forge
 - ipywidgets=7.4.*
 - matplotlib=3.1.*
