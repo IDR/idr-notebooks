@@ -2,11 +2,8 @@ name: python3
 channels:
 - conda-forge
 - defaults
-- ome
 - bioconda
 dependencies:
-# bioconda
-# - idr-py=0.3.0=py27_0
 - gseapy=0.9.8=py36_0
 # conda-forge
 - bokeh=1.4.0=py36_0
@@ -15,9 +12,9 @@ dependencies:
 - python-graphviz=0.13=py_0
 - python-igraph=0.7.1.post6=py36_4
 - scikit-learn=0.21.*
-- seaborn=0.9.0=py36_0
 - tqdm=4.36.1=py_0
+- pip
 # defaults
 - pip:
   - py2cytoscape==0.7.1
-  - omero-py>=5.6.dev7
+  - idr-py>=0.4.0.dev3
