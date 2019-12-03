@@ -8,7 +8,6 @@ dependencies:
 - idr-py
 # bioconda
 - gseapy=0.9.8=py36_0
-- pip
 # conda-forge
 - bokeh=1.4.0=py36_0
 - joblib=0.12.1=py36_0
