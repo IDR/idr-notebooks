@@ -16,5 +16,4 @@ dependencies:
 - tqdm=4.36.1=py_0
 - py2cytoscape==0.7.1
 # defaults
-- pip:
   - idr-py>=0.4.0.dev3
