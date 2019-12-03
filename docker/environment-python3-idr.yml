@@ -4,6 +4,9 @@ channels:
 - defaults
 - bioconda
 dependencies:
+# ome (todo)
+- idr-py
+# bioconda
 - gseapy=0.9.8=py36_0
 - pip
 # conda-forge
