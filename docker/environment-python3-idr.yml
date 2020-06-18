@@ -1,0 +1,21 @@
+name: python3
+channels:
+- ome
+- idr
+- conda-forge
+- defaults
+- bioconda
+dependencies:
+# idr
+- idr-py
+# bioconda
+- gseapy=0.9.8=py36_0
+# conda-forge
+- bokeh=1.4.0=py36_0
+- joblib=0.12.1=py36_0
+- markdown=3.1=py36_0
+- python-graphviz=0.13=py_0
+- python-igraph=0.7.1.post6=py36_4
+- scikit-learn=0.21.*
+- tqdm=4.36.1=py_0
+- py2cytoscape==0.7.1
