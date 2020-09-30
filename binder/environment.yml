@@ -1,0 +1,16 @@
+channels:
+- bioconda
+- conda-forge
+- defaults
+- ome
+dependencies:
+- pip
+- omero-py
+- scikit-image=0.17.*
+- scikit-learn=0.23.*
+- bokeh=2.2.*
+- ipywidgets
+- matplotlib
+- numpy
+- pandas
+- seaborn
