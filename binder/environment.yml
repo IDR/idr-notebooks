@@ -5,7 +5,7 @@ channels:
 - ome
 dependencies:
 - pip
-- omero-py
+- idr-py
 - scikit-image=0.17.*
 - scikit-learn=0.23.*
 - bokeh=2.2.*
@@ -14,3 +14,5 @@ dependencies:
 - numpy
 - pandas
 - seaborn
+#- pip:
+#  - idr-py
