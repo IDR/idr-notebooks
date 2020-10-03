@@ -14,5 +14,3 @@ dependencies:
 - numpy
 - pandas
 - seaborn
-#- pip:
-#  - idr-py
