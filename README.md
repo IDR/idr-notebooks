@@ -4,6 +4,23 @@ A set of Python Notebooks to demonstrate how to access the images and metadata f
 
 Full access to IDR metadata and images is provided through the standard OMERO API, documentation for which can be found [here](https://docs.openmicroscopy.org/latest/omero5.4/developers/index.html), with the Python bindings found specifically [here](https://docs.openmicroscopy.org/latest/omero5.4/developers/Python.html). The notebooks in this repository are meant to exemplify the use of that API in the context of the IDR, and the sort of queries that can be done. In particular, they show how to reproduce Figure 1 and Figure 2 of the paper.<sup>[1](#footnote1)</sup> They also make use of the [scipy](https://www.scipy.org/) ecosystem, including [pandas](https://pandas.pydata.org).
 
+To run the notebooks, you can either [run on mybinder.org](https://mybinder.org/v2/gh/IDR/idr-notebooks/master) or build locally with [repo2docker](https://repo2docker.readthedocs.io/).
+
+
+To build locally:
+
+ * Install [Docker](https://www.docker.com/) if required
+ * Create a virtual environment and install repo2docker from PyPI.
+ * Clone this repository
+ * Run ``repo2docker``. 
+ * Depending on the permissions, you might have to run the command as an admin
+
+```
+pip install jupyter-repo2docker
+git clone https://github.com/IDR/idr-notebooks.git
+cd idr-notebooks
+repo2docker .
+```
 
 | **Notebook**                                                               | **Lang** | **Level**     | **Description**                                                                                                                                                                                                                                                                                                                                                                                                    |
 |----------------------------------------------------------------------------|----------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
