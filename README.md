@@ -6,7 +6,6 @@ Full access to IDR metadata and images is provided through the standard OMERO AP
 
 To run the notebooks, you can either [run on mybinder.org](https://mybinder.org/v2/gh/IDR/idr-notebooks/master) or build locally with [repo2docker](https://repo2docker.readthedocs.io/).
 
-
 To build locally:
 
  * Install [Docker](https://www.docker.com/) if required
