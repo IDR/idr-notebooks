@@ -1,0 +1,21 @@
+# Builds the repository using repo2docker
+
+---
+name: repo2docker
+
+on: 
+  push:
+  pull_request:
+  schedule:
+      - cron: '0 0 * * 0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: repo2docker install
+        run: pip install --upgrade jupyter-repo2docker
+      - name: Build container
+        run: repo2docker --no-run .
