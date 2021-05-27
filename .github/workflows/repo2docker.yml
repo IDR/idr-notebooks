@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - name: repo2docker install
-        run: pip install --upgrade jupyter-repo2docker
+        run: |
+          pip install six
+          pip install --upgrade jupyter-repo2docker
       - name: Build container
         run: repo2docker --no-run .
