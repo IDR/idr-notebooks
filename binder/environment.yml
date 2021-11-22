@@ -16,3 +16,4 @@ dependencies:
 - seaborn
 - tifffile
 - jupyter_contrib_nbextensions
+- intermine
