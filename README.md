@@ -56,10 +56,6 @@ The following steps are only required if you want to run the notebooks
   * Open jupyter notebook i.e. ``jupyter notebook`` and select the ``idr_env`` kernel or ``[conda env:idr_env]`` according to what is available
 
 
-An additional benefit of installing the requirements locally is that you
-can then use the tools without needing to launch Jupyter itself.
-
-
 | **Notebook**                                                               | **Lang** | **Level**     | **Description**                                                                                                                                                                                                                                                                                                                                                                                                    |
 |----------------------------------------------------------------------------|----------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **[Using Jupyter](Using_Jupyter.ipynb)**                                   | Markdown | Intro         | Getting a login account                                                                                                                                                                                                                                                                                                                                                                                            |
