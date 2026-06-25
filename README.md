@@ -2,56 +2,51 @@
 
 A set of Python Notebooks to demonstrate how to access the images and metadata from the [Image Data Resource (IDR)](https://idr.openmicroscopy.org), including the features and all of the descriptive tags.
 
-Full access to IDR metadata and images is provided through the standard OMERO API, documentation for which can be found [here](https://omero.readthedocs.io/en/stable/developers/index.html), with the Python bindings found specifically [here](https://omero.readthedocs.io/en/stable/developers/Python.html). The notebooks in this repository are meant to exemplify the use of that API in the context of the IDR, and the sort of queries that can be done. In particular, they show how to reproduce Figure 1 and Figure 2 of the paper.<sup>[1](#footnote1)</sup> They also make use of the [scipy](https://www.scipy.org/) ecosystem, including [pandas](https://pandas.pydata.org).
+The recommended way to access IDR metadata and images is via the OMERO Web-based API, which doesn't require a login. This primarily consists of the [JSON API](https://omero.readthedocs.io/en/stable/developers/json-api.html)
+and the [WebGateway](https://omero.readthedocs.io/en/stable/developers/Web/WebGateway.html).
+
+IDR is currently migrating to the [OME-Zarr](https://ngff.openmicroscopy.org/) image format. Many images have been converted to OME-Zarr, which are hosted on public object storage allowing scalable access
+to binary pixel data. Other images that have not yet been converted must be downloaded and read locally to access pixel data.
+The [IDR home page](https://idr.openmicroscopy.org/) indicates which studies have been converted to OME-Zarr. Only Images in that are in OME-Zarr format will be viewable in the main image viewer on IDR, and
+OME-Zarr Images can also be identified in the IDR webclient by the display of a "Zarr" button above the right panel which will display the Zarr URL (`External Info`).
+
+The OMERO web API can be used to identify OME-Zarr Images by the presence of `External Info` annotation of the image, as described in the `IDR API example script` notebook below.
+
+The notebooks in this repository are meant to exemplify the use of the OMERO web API in the context of the IDR, and the sort of queries that can be done.
+In particular, they show how to reproduce Figure 1 and Figure 2 of the paper.<sup>[1](#footnote1)</sup>
+They also make use of the [scipy](https://www.scipy.org/) ecosystem, including [pandas](https://pandas.pydata.org).
 
 
-## Running the notebooks
+## Running the notebooks locally
 
-### Running on cloud resources
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IDR/idr-notebooks/)
-
-
-### Running locally
-**NOTE**: At the moment, running locally does not work.
-Please use the Google Colab workflow (see above).
-
-If you would like to install the necessary requirements locally,
-we suggest using conda:
+To install the necessary requirements locally, we suggest using conda:
 
 You can for example install Anaconda https://www.anaconda.com/products/individual#Downloads
 
-Create an environment:
+Create an environment with dependencies:
 
-    $ git clone https://github.com/IDR/idr-notebooks
-    $ cd idr-notebooks
-    $ conda env create -n idr_env -f binder/environment.yml
+    $ conda create -n jupyter_idr python=3.12
+    $ conda activate jupyter_idr
+    $ pip install jupyterlab notebook matplotlib pandas tifffile bokeh
 
-and activate the newly created environment:
+For reading pixel data from OME-Zarrs, we also need: 
 
-    $ conda activate idr_env
+    $ pip install zarr aiohttp dask fsspec s3fs
 
-The following steps are only required if you want to run the notebooks
+For Figure 2 GeneNetwork notebook, we need:
 
-* If you have Anaconda installed:
-  * Start Jupyter from the Anaconda-navigator
-  * Select the notebook you wish to run and select the ``Kernel>Change kernel>Python [conda env:idr_env]``
-* If Anaconda is not installed:
-  * In the environment, install ``jupyter`` e.g. ``pip install jupyter``
-  * Add the virtualenv as a jupyter kernel i.e. ``ipython kernel install --name "idr_env" --user``
-  * Open jupyter notebook i.e. ``jupyter notebook`` and select the ``idr_env`` kernel or ``[conda env:idr_env]`` according to what is available
+    $ pip install networkx
+
+Then we can launch with:
+
+    $ jupyter notebook
 
 
 | **Notebook**                                                               | **Lang** | **Level**     | **Description**                                                                                                                                                                                                                                                                                                                                                                                                    |
 |----------------------------------------------------------------------------|----------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **[Using Jupyter](Using_Jupyter.ipynb)**                                   | Markdown | Intro         | Getting a login account                                                                                                                                                                                                                                                                                                                                                                                            |
-| **[IDR API example script](IDR_API_example_script.ipynb)**                 | Py       | Intro         | Shows an example of using the web API to extract metadata from the IDR. Can also be launched **locally**.                                                                                                                                                                                                                                                                                                          |
-| **[Getting Started](Getting_Started.ipynb)**                               | Py       | Intro         | How to connect, some simple data access                                                                                                                                                                                                                                                                                                                                                                            |
+| **[IDR API example script](IDR_API_example_script.ipynb)**                 | Py       | Intro         | Shows an example of using the web API to extract metadata from the IDR.                                                                                                                                                                                                                                                                                                                                            |
 | **[Figure 1 Sample of Phenotypes](Figure_1_Sampling_of_Phenotypes.ipynb)** | Py       | IDR Paper     | Reproduces Fig. 1 of the paper: downloads annotations from all screens and computes and plots some statistics                                                                                                                                                                                                                                                                                                      |
-| **[Gene Network](GeneNetwork.ipynb)**                                      | Py       | IDR Paper     | Reproduces Fig. 2 of the paper: downloads annotations from 3 screens,with a phenotype in common, queries StringDB for interactions and plots the resulting network. Uses a conversion table for orthologues and gene identifiers which was built offline using biomart (see article for more details). It uses [Bokeh](https://bokeh.pydata.org/) and [NetworkX](https://networkx.github.io/) to display networks. |
-| **[PCA analysis of Charm features](PCAanalysisOfCharmFeatures.ipynb)**     | Py       | Study details | Shows how to access the computed CHARM features using OMERO.tables, and performs some analysis on them, showing that single cell information can be accessed from generic tile-based features, without segmentation.                                                                                                                                                                                               |
-| **[Rohn Phenotype Clustering](RohnPhenotypeClustering.ipynb)**             | Py       | Study details | Downloads annotations from idr0008-rohn-actinome, and performs some simple phenotypic clustering, building a figure, similar to Fig. 1 of the corresponding paper. Builds a gallery of thumbnails from images of several phenotypes.                                                                                                                                                                               |
-| **[Sysgro ROI Length](SysgroRoiLength.ipynb)**                             | Py       | Study details | Loads polygons which are linked to the images of idr0001-graml-sysgro and compares the length of cells labelled with a particular gene such as ASH2 versus the wild type.                                                                                                                                                                                                                                          |
-| **[Calculate Sharpness](https://github.com/ome/omero-guide-python/blob/master/notebooks/CalculateSharpnessOneImage.ipynb)**                        | Py       | Example       | Calculates sharpness of images and generates heatmaps.                                                                                                                                                                                                                                                                                                                                                             |
+| **[Figure 2: Gene Network](GeneNetwork.ipynb)**                            | Py       | IDR Paper     | Reproduces Fig. 2 of the paper: downloads annotations from 3 screens, with a phenotype in common, queries StringDB for interactions and plots the resulting network. Uses a conversion table for orthologues and gene identifiers which was built offline using biomart (see article for more details). It uses [Bokeh](https://bokeh.pydata.org/) and [NetworkX](https://networkx.github.io/) to display networks.|
 
 ----
 
